@@ -259,7 +259,7 @@ export default function Team() {
                 <p className="mt-1 text-sm text-mist-500">
                   {member.expertise?.title ?? member.role}
                 </p>
-                <span className={`mt-3 text-xs font-medium transition ${isActive ? "text-ink" : "text-lime"}`}>
+                <span className={`mt-3 text-xs font-medium transition ${isActive ? "text-ink" : "text-mist-500"}`}>
                   {isActive ? "R\u00e9duire \u2715" : "Voir le profil \u2192"}
                 </span>
               </button>
