@@ -75,19 +75,19 @@ export default function CTA() {
   return (
     <section
       id="contact"
-      className="relative bg-bone-100 py-28 md:py-36"
+      className="relative bg-bone-100 py-20 md:py-28 lg:py-36"
     >
       <div className="absolute inset-x-0 top-0 mx-auto h-px max-w-7xl bg-bone-200" />
 
-      <div className="mx-auto max-w-3xl px-6 md:px-10">
+      <div className="mx-auto max-w-3xl px-5 md:px-10">
         <div className="text-center">
           <span className="reveal text-[10px] uppercase tracking-[0.25em] text-mist-500">
             Contact
           </span>
-          <h2 className="reveal reveal-delay-1 mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-5xl lg:text-6xl whitespace-nowrap">
+          <h2 className="reveal reveal-delay-1 mt-4 text-3xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-4xl md:mt-5 md:text-5xl lg:text-6xl lg:whitespace-nowrap">
             Un projet sportif en t&ecirc;te&nbsp;?
           </h2>
-          <p className="reveal reveal-delay-2 mx-auto mt-4 max-w-xl text-mist-500">
+          <p className="reveal reveal-delay-2 mx-auto mt-3 max-w-xl text-sm text-mist-500 md:mt-4 md:text-base">
             On en discute autour d'un caf&eacute; — ou d'un terrain.
           </p>
         </div>
@@ -149,11 +149,11 @@ export default function CTA() {
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-5 pt-2">
+          <div className="flex flex-col items-stretch gap-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
             <button
               type="submit"
               disabled={loading}
-              className="group inline-flex items-center gap-3 rounded-full bg-lime px-7 py-4 text-sm font-semibold text-ink transition-all hover:bg-ink hover:text-lime disabled:opacity-50"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-lime px-7 py-4 text-sm font-semibold text-ink transition-all hover:bg-ink hover:text-lime disabled:opacity-50"
             >
               {sent
                 ? "Message envoy\u00e9 \u2713"
@@ -170,7 +170,7 @@ export default function CTA() {
             </button>
             <a
               href={`mailto:${site.email}`}
-              className="text-sm text-mist-500 underline decoration-bone-200 underline-offset-4 transition hover:text-ink hover:decoration-ink"
+              className="text-center text-sm text-mist-500 underline decoration-bone-200 underline-offset-4 transition hover:text-ink hover:decoration-ink sm:text-left"
             >
               {site.email}
             </a>

@@ -118,7 +118,7 @@ function CampaignFolder({
       <button
         type="button"
         onClick={onToggle}
-        className={`flex w-full items-center gap-4 rounded-xl border p-4 transition ${
+        className={`flex w-full items-center gap-3 rounded-xl border p-3 transition md:gap-4 md:p-4 ${
           isOpen
             ? "border-lime bg-lime/5"
             : "border-bone-200 bg-bone-50 hover:border-ink/20 hover:bg-bone-100"
@@ -236,40 +236,40 @@ export default function ProjectModal({
         <div className="fixed inset-0 bg-ink/90" onClick={onClose} />
 
         {/* Modal */}
-        <div className="relative z-10 mx-4 my-8 w-full max-w-5xl animate-fade-in rounded-3xl bg-white p-6 text-ink shadow-2xl md:my-16 md:p-10">
+        <div className="relative z-10 mx-2 my-4 w-full max-w-5xl animate-fade-in rounded-2xl bg-white p-4 text-ink shadow-2xl sm:mx-4 sm:rounded-3xl sm:p-6 md:my-16 md:p-10">
           {/* Close */}
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-bone-100 text-ink transition hover:bg-ink hover:text-white md:right-6 md:top-6"
+            className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-bone-100 text-ink transition hover:bg-ink hover:text-white sm:right-4 sm:top-4 sm:h-10 sm:w-10 md:right-6 md:top-6"
             aria-label="Fermer"
           >
             &#10005;
           </button>
 
           {/* Header */}
-          <div className="mb-8 pr-12">
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="mb-5 pr-10 md:mb-8 md:pr-12">
+            <div className="flex flex-wrap items-center gap-2 md:gap-3">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-bone-200 px-3 py-1 text-[10px] uppercase tracking-wider text-mist-500"
+                  className="rounded-full border border-bone-200 px-2.5 py-0.5 text-[9px] uppercase tracking-wider text-mist-500 sm:px-3 sm:py-1 sm:text-[10px]"
                 >
                   {tag}
                 </span>
               ))}
               {project.year && (
-                <span className="text-xs text-mist-400">{project.year}</span>
+                <span className="text-[11px] text-mist-400 md:text-xs">{project.year}</span>
               )}
             </div>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl md:mt-4 md:text-5xl">
               {project.title}
             </h2>
             {project.client && (
-              <p className="mt-2 text-mist-500">{project.client}</p>
+              <p className="mt-1.5 text-sm text-mist-500 md:mt-2 md:text-base">{project.client}</p>
             )}
             {project.description && (
-              <p className="mt-4 max-w-2xl text-mist-500">
+              <p className="mt-3 max-w-2xl text-sm text-mist-500 md:mt-4 md:text-base">
                 {project.description}
               </p>
             )}
@@ -277,8 +277,8 @@ export default function ProjectModal({
 
           {/* Campaign folders */}
           {hasCampaigns && (
-            <div className="mb-8">
-              <p className="mb-4 text-[10px] uppercase tracking-[0.2em] text-mist-400">
+            <div className="mb-5 md:mb-8">
+              <p className="mb-3 text-[10px] uppercase tracking-[0.2em] text-mist-400 md:mb-4">
                 Campagnes &amp; cr&eacute;ations
               </p>
               {project.campaigns.map((campaign) => (

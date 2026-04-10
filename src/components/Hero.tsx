@@ -63,18 +63,18 @@ export default function Hero() {
       />
 
       {/* ── CONTENT ──────────────────────────────────────────────────── */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-6 pb-32 pt-44 md:px-10 md:pb-40 md:pt-52">
-        <h1 className="reveal max-w-5xl text-5xl font-semibold leading-[1] tracking-tight md:text-7xl lg:text-[88px]">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-24 pt-36 md:px-10 md:pb-40 md:pt-52">
+        <h1 className="reveal max-w-5xl text-[11vw] font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-7xl lg:text-[88px]">
           <span className="text-lime">{heroContent.title_accent}</span>
           <br />
           {heroContent.title_end}
         </h1>
 
-        <p className="reveal reveal-delay-1 mt-8 max-w-2xl text-base text-white/80 md:text-lg">
+        <p className="reveal reveal-delay-1 mt-6 max-w-2xl text-[15px] leading-relaxed text-white/80 md:mt-8 md:text-lg">
           {heroContent.subtitle}
         </p>
 
-        <div className="reveal reveal-delay-2 mt-12 flex flex-wrap items-center gap-5">
+        <div className="reveal reveal-delay-2 mt-8 flex flex-wrap items-center gap-4 md:mt-12 md:gap-5">
           <a
             href={heroContent.cta_link}
             className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-ink transition-all hover:bg-lime hover:text-ink"

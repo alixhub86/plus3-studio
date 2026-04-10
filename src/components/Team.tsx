@@ -8,8 +8,8 @@ function MemberAvatar({ member, size = "md" }: { member: TeamMember; size?: "md"
   const [imgFailed, setImgFailed] = useState(false);
   const hasPhoto = Boolean(member.photo) && !imgFailed;
   const sizeClasses = size === "lg"
-    ? "h-36 w-36 md:h-44 md:w-44"
-    : "h-28 w-28 md:h-32 md:w-32";
+    ? "h-24 w-24 sm:h-32 sm:w-32 md:h-44 md:w-44"
+    : "h-20 w-20 sm:h-28 sm:w-28 md:h-32 md:w-32";
 
   return (
     <div className={`relative overflow-hidden rounded-full bg-ink ${sizeClasses}`}>
@@ -41,7 +41,7 @@ function ExpandedProfile({ member }: { member: TeamMember }) {
     <div className="flex flex-col gap-8 md:flex-row md:gap-12">
       {/* Photo */}
       {member.photo && (
-        <div className="relative mx-auto h-56 w-56 flex-shrink-0 overflow-hidden rounded-2xl bg-bone-200 md:mx-0 md:h-64 md:w-64">
+        <div className="relative mx-auto h-48 w-48 flex-shrink-0 overflow-hidden rounded-2xl bg-bone-200 sm:h-56 sm:w-56 md:mx-0 md:h-64 md:w-64">
           <Image
             src={member.photo}
             alt={member.firstName}
@@ -207,25 +207,25 @@ export default function Team() {
     <section
       ref={sectionRef}
       id="equipe"
-      className="relative bg-white py-28 md:py-36"
+      className="relative bg-white py-20 md:py-28 lg:py-36"
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
+      <div className="mx-auto max-w-7xl px-5 md:px-10">
         {/* Heading */}
-        <div className={`mb-16 flex flex-col items-center gap-4 text-center md:mb-20 ${revealClass()}`}>
+        <div className={`mb-10 flex flex-col items-center gap-3 text-center md:mb-20 md:gap-4 ${revealClass()}`}>
           <span className="text-[10px] uppercase tracking-[0.25em] text-mist-500">
             Le collectif
           </span>
-          <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+          <h2 className="text-3xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-4xl md:text-6xl">
             Qui sommes-nous
           </h2>
-          <p className="mt-4 max-w-xl text-mist-500">
+          <p className="mt-3 max-w-xl text-sm text-mist-500 md:mt-4 md:text-base">
             Trois ind&eacute;pendants, un seul terrain de jeu. Chacun son expertise,
             une seule vision pour vos projets.
           </p>
         </div>
 
-        {/* 3 avatars */}
-        <div className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3">
+        {/* 3 avatars — always 3 cols, even on mobile */}
+        <div className="mx-auto grid max-w-5xl grid-cols-3 gap-4 sm:gap-8 md:gap-10">
           {team.map((member, i) => {
             const isActive = expandedId === member.id;
             return (
@@ -253,13 +253,13 @@ export default function Team() {
                   />
                 </div>
 
-                <h3 className="mt-5 text-xl font-semibold text-ink md:text-2xl">
+                <h3 className="mt-3 text-base font-semibold text-ink sm:mt-5 sm:text-xl md:text-2xl">
                   {member.firstName}
                 </h3>
-                <p className="mt-1 text-sm text-mist-500">
+                <p className="mt-0.5 text-[11px] text-mist-500 sm:mt-1 sm:text-sm">
                   {member.expertise?.title ?? member.role}
                 </p>
-                <span className={`mt-3 text-xs font-medium transition ${isActive ? "text-ink" : "text-mist-500"}`}>
+                <span className={`mt-2 text-[11px] font-medium transition sm:mt-3 sm:text-xs ${isActive ? "text-ink" : "text-mist-500"}`}>
                   {isActive ? "R\u00e9duire \u2715" : "Voir le profil \u2192"}
                 </span>
               </button>
@@ -276,7 +276,7 @@ export default function Team() {
               : "mt-0 max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-3xl border border-bone-200 bg-bone-50 p-8 md:p-12">
+          <div className="rounded-2xl border border-bone-200 bg-bone-50 p-5 sm:rounded-3xl sm:p-8 md:p-12">
             {team.map((member) => (
               <div
                 key={member.id}

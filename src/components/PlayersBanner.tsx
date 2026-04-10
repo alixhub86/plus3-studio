@@ -9,7 +9,7 @@ export default function PlayersBanner() {
   const [logoError, setLogoError] = useState(false);
 
   return (
-    <section className="relative overflow-hidden bg-[#0a0a0a] py-20 md:py-28">
+    <section className="relative overflow-hidden bg-[#0a0a0a] py-16 md:py-20 lg:py-28">
       {/* Red accent glow */}
       <div
         aria-hidden
@@ -26,8 +26,8 @@ export default function PlayersBanner() {
         className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent"
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 md:px-10">
-        <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-center md:gap-16 md:text-left">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-10">
+        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-16 md:text-left">
           {/* Content */}
           <div className="flex-1">
             {/* Logo or fallback text */}
@@ -51,11 +51,11 @@ export default function PlayersBanner() {
               )}
             </div>
 
-            <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+            <h2 className="text-2xl font-semibold leading-tight tracking-tight text-white sm:text-3xl md:text-5xl">
               Chaque joueur m&eacute;rite{" "}
               <span className="text-red-600">son image.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-base text-white/50 md:text-lg">
+            <p className="mt-3 max-w-xl text-sm text-white/50 sm:text-base md:mt-4 md:text-lg">
               Personal branding, shooting photo, vid&eacute;o lifestyle et match,
               contenus r&eacute;seaux, identit&eacute; visuelle &mdash; +3 Players
               construit l&rsquo;image des athl&egrave;tes qui veulent se

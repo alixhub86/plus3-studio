@@ -59,12 +59,15 @@ export default function Lightbox({
   }, [media]);
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/95 bg-ink/95">
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/95"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
       {/* Close */}
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:right-6 md:top-6"
+        className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:right-6 md:top-6 md:h-11 md:w-11"
         aria-label="Fermer"
       >
         ✕
@@ -75,7 +78,7 @@ export default function Lightbox({
         <button
           type="button"
           onClick={onPrev}
-          className="absolute left-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20 md:left-6"
+          className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-lg text-white transition hover:bg-white/20 md:left-6 md:h-12 md:w-12 md:text-xl"
           aria-label="Précédent"
         >
           ←
@@ -87,7 +90,7 @@ export default function Lightbox({
         <button
           type="button"
           onClick={onNext}
-          className="absolute right-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20 md:right-6"
+          className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-lg text-white transition hover:bg-white/20 md:right-6 md:h-12 md:w-12 md:text-xl"
           aria-label="Suivant"
         >
           →
@@ -95,7 +98,7 @@ export default function Lightbox({
       )}
 
       {/* Content */}
-      <div className="relative mx-auto flex max-h-[90vh] max-w-6xl items-center justify-center px-16">
+      <div className="relative mx-auto flex max-h-[90vh] max-w-6xl items-center justify-center px-12 md:px-16">
         {media.type === "image" && (
           <Image
             src={media.src}

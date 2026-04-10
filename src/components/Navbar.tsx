@@ -45,7 +45,7 @@ export default function Navbar({ logoSrc }: NavbarProps) {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10 md:py-5">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 md:px-10 md:py-5">
         {/* Logo */}
         <a
           href="#top"
@@ -62,7 +62,7 @@ export default function Navbar({ logoSrc }: NavbarProps) {
               className={`transition duration-500 ${
                 isDark ? "invert" : ""
               }`}
-              style={{ width: "auto", height: 60 }}
+              style={{ width: "auto", height: 48 }}
             />
           ) : (
             <span
@@ -133,16 +133,18 @@ export default function Navbar({ logoSrc }: NavbarProps) {
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <ul className="flex flex-col gap-2 border-t border-bone-200 bg-white px-6 py-6">
+        <ul className="flex flex-col border-t border-bone-200 bg-white px-5 py-4">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="block py-3 text-2xl font-serif text-ink"
+                className="flex items-center justify-between py-4 text-lg font-semibold text-ink active:text-lime"
               >
                 {l.label}
+                <span className="text-mist-400 text-sm">→</span>
               </a>
+              <div className="h-px bg-bone-200 last:hidden" />
             </li>
           ))}
         </ul>

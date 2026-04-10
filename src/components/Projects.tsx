@@ -32,7 +32,7 @@ function ProjectCard({
 
   return (
     <article onClick={onClick} className="group cursor-pointer">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-ink md:rounded-2xl">
         {/* Cover */}
         {hasCover && project.cover!.type === "image" ? (
           <Image
@@ -42,7 +42,7 @@ function ProjectCard({
               project.title
             }
             fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 33vw, 50vw"
             quality={40}
             loading="lazy"
             placeholder="empty"
@@ -79,13 +79,13 @@ function ProjectCard({
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
         {/* Content at bottom */}
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 md:p-6">
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3.5 md:gap-3 md:p-6">
           <div className="min-w-0 flex-1">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+            <span className="hidden text-[10px] uppercase tracking-[0.2em] text-white/60 sm:block">
               {project.tags.join(" · ")}
               {project.year && ` — ${project.year}`}
             </span>
-            <h3 className="mt-1 text-lg font-bold leading-tight text-white md:text-xl">
+            <h3 className="text-sm font-bold leading-tight text-white sm:mt-1 sm:text-lg md:text-xl">
               {project.title}
             </h3>
           </div>
@@ -95,13 +95,13 @@ function ProjectCard({
               alt=""
               width={60}
               height={60}
-              className="h-12 w-12 flex-shrink-0 object-contain drop-shadow-lg md:h-[60px] md:w-[60px]"
+              className="h-8 w-8 flex-shrink-0 object-contain drop-shadow-lg sm:h-12 sm:w-12 md:h-[60px] md:w-[60px]"
             />
           )}
         </div>
 
-        {/* Hover CTA */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        {/* Hover CTA — hidden on touch devices */}
+        <div className="absolute inset-0 hidden items-center justify-center bg-black/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:flex">
           <span className="rounded-full bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-ink">
             Voir le projet →
           </span>
@@ -138,42 +138,44 @@ export default function Projects({ projects }: { projects: Project[] }) {
     <>
       <section
         id="projets"
-        className="relative bg-ink text-white py-28 md:py-36"
+        className="relative bg-ink text-white py-20 md:py-28 lg:py-36"
       >
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="mx-auto max-w-7xl px-5 md:px-10">
           {/* Heading */}
-          <div className="reveal mb-12 flex flex-col gap-4 md:mb-16">
+          <div className="reveal mb-8 flex flex-col gap-3 md:mb-16 md:gap-4">
             <span className="text-[10px] uppercase tracking-[0.25em] text-white/50">
               Portfolio
             </span>
-            <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="text-3xl font-semibold leading-[1.05] tracking-tight sm:text-4xl md:text-6xl">
               Nos projets
             </h2>
           </div>
 
-          {/* Filters */}
-          <div className="reveal reveal-delay-1 mb-12 flex flex-wrap gap-3">
-            {projectFilters.map((filter) => {
-              const isActive = active === filter;
-              return (
-                <button
-                  key={filter}
-                  type="button"
-                  onClick={() => setFilter(filter)}
-                  className={`rounded-full border px-5 py-2 text-xs uppercase tracking-wider transition-all duration-300 ${
-                    isActive
-                      ? "border-white bg-white text-ink"
-                      : "border-white/25 text-white/70 hover:border-white/60 hover:text-white"
-                  }`}
-                >
-                  {filter}
-                </button>
-              );
-            })}
+          {/* Filters — scrollable on mobile */}
+          <div className="reveal reveal-delay-1 -mx-5 mb-8 overflow-x-auto px-5 md:mx-0 md:mb-12 md:overflow-visible md:px-0">
+            <div className="flex gap-2.5 pb-2 md:flex-wrap md:gap-3 md:pb-0">
+              {projectFilters.map((filter) => {
+                const isActive = active === filter;
+                return (
+                  <button
+                    key={filter}
+                    type="button"
+                    onClick={() => setFilter(filter)}
+                    className={`flex-shrink-0 rounded-full border px-4 py-2 text-xs uppercase tracking-wider transition-all duration-300 md:px-5 ${
+                      isActive
+                        ? "border-white bg-white text-ink"
+                        : "border-white/25 text-white/70 hover:border-white/60 hover:text-white"
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Grid: 3 columns × 2 rows */}
-          <div className="grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-2 md:gap-8 lg:grid-cols-3">
             {visible.map((project) => (
               <ProjectCard
                 key={project.id}
@@ -185,7 +187,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
 
           {/* Empty state */}
           {filtered.length === 0 && (
-            <div className="rounded-2xl border border-white/10 p-16 text-center">
+            <div className="rounded-2xl border border-white/10 p-10 text-center md:p-16">
               <p className="text-white/60">
                 Aucun projet dans cette cat&eacute;gorie pour le moment.
               </p>
@@ -194,7 +196,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
 
           {/* Navigation arrows below the grid */}
           {totalPages > 1 && (
-            <div className="mt-12 flex items-center justify-center gap-4">
+            <div className="mt-8 flex items-center justify-center gap-4 md:mt-12">
               <button
                 type="button"
                 onClick={() => setPage((p) => p - 1)}
