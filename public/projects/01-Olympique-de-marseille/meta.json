@@ -1,7 +1,11 @@
 {
   "title": "Olympique de Marseille",
-  "tags": ["Photo"],
+  "tags": ["Photo", "Vidéo"],
   "client": "OM",
   "year": "2025",
-  "decoColor": "gray"
+  "decoColor": "gray",
+  "videos": [
+    { "url": "https://youtu.be/kRAuCLIbIRc" },
+    { "url": "https://youtu.be/k5W-Aljo2xo" }
+  ]
 }

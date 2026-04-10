@@ -8,8 +8,8 @@ function MemberAvatar({ member, size = "md" }: { member: TeamMember; size?: "md"
   const [imgFailed, setImgFailed] = useState(false);
   const hasPhoto = Boolean(member.photo) && !imgFailed;
   const sizeClasses = size === "lg"
-    ? "h-28 w-28 md:h-32 md:w-32"
-    : "h-24 w-24 md:h-28 md:w-28";
+    ? "h-36 w-36 md:h-44 md:w-44"
+    : "h-28 w-28 md:h-32 md:w-32";
 
   return (
     <div className={`relative overflow-hidden rounded-full bg-ink ${sizeClasses}`}>
@@ -18,7 +18,7 @@ function MemberAvatar({ member, size = "md" }: { member: TeamMember; size?: "md"
           src={member.photo as string}
           alt={member.firstName}
           fill
-          sizes={size === "lg" ? "128px" : "112px"}
+          sizes={size === "lg" ? "176px" : "128px"}
           className="object-cover"
           loading="eager"
           onError={() => setImgFailed(true)}

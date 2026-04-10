@@ -1,7 +1,10 @@
 {
   "title": "ES Buxerolles",
-  "tags": ["Branding", "Photo"],
+  "tags": ["Branding", "Photo", "Vidéo"],
   "client": "ES Buxerolles",
   "year": "2024",
-  "decoColor": "black"
+  "decoColor": "black",
+  "videos": [
+    { "url": "https://youtu.be/0gQpsNqMUf4" }
+  ]
 }

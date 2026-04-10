@@ -17,8 +17,8 @@ const PAGE_SIZE = 6; // 3 columns × 2 rows
 
 const decoColorMap: Record<Project["decoColor"], string> = {
   lime: "bg-lime",
-  gray: "bg-bone-200",
-  black: "bg-ink",
+  gray: "bg-white/30",
+  black: "bg-white/10",
 };
 
 function ProjectCard({
@@ -31,39 +31,33 @@ function ProjectCard({
   const hasCover = Boolean(project.cover);
 
   return (
-    <article
-      onClick={onClick}
-      className="group cursor-pointer"
-    >
-      {/* Visual */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-bone-100">
+    <article onClick={onClick} className="group cursor-pointer">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink">
+        {/* Cover */}
         {hasCover && project.cover!.type === "image" ? (
-          <>
-            <Image
-              src={project.cover!.src}
-              alt={("alt" in project.cover! ? project.cover!.alt : undefined) ?? project.title}
-              fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              quality={40}
-              loading="lazy"
-              placeholder="empty"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-          </>
+          <Image
+            src={project.cover!.src}
+            alt={
+              ("alt" in project.cover! ? project.cover!.alt : undefined) ??
+              project.title
+            }
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            quality={40}
+            loading="lazy"
+            placeholder="empty"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
         ) : hasCover && project.cover!.type === "video" ? (
-          <>
-            <video
-              src={project.cover!.src}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-          </>
+          <video
+            src={project.cover!.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
         ) : (
           <>
             <div
@@ -71,7 +65,7 @@ function ProjectCard({
               className="absolute inset-0 opacity-[0.06]"
               style={{
                 backgroundImage:
-                  "linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)",
+                  "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
                 backgroundSize: "32px 32px",
               }}
             />
@@ -81,23 +75,37 @@ function ProjectCard({
           </>
         )}
 
+        {/* Gradient overlay from bottom */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        {/* Content at bottom */}
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 md:p-6">
+          <div className="min-w-0 flex-1">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+              {project.tags.join(" · ")}
+              {project.year && ` — ${project.year}`}
+            </span>
+            <h3 className="mt-1 text-lg font-bold leading-tight text-white md:text-xl">
+              {project.title}
+            </h3>
+          </div>
+          {project.logo && (
+            <Image
+              src={project.logo}
+              alt=""
+              width={48}
+              height={48}
+              className="h-10 w-10 flex-shrink-0 object-contain drop-shadow-lg md:h-12 md:w-12"
+            />
+          )}
+        </div>
+
         {/* Hover CTA */}
-        <div className="absolute inset-0 flex items-end justify-end p-6 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-          <span className="rounded-full bg-ink px-4 py-2 text-xs uppercase tracking-wider text-lime">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <span className="rounded-full bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-ink">
             Voir le projet →
           </span>
         </div>
-      </div>
-
-      {/* Meta */}
-      <div className="mt-4">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">
-          {project.tags.join(" • ")}
-          {project.year && ` — ${project.year}`}
-        </span>
-        <h3 className="mt-1.5 text-xl font-bold leading-tight transition-colors group-hover:text-lime">
-          {project.title}
-        </h3>
       </div>
     </article>
   );
@@ -179,7 +187,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
           {filtered.length === 0 && (
             <div className="rounded-2xl border border-white/10 p-16 text-center">
               <p className="text-white/60">
-                Aucun projet dans cette catégorie pour le moment.
+                Aucun projet dans cette cat&eacute;gorie pour le moment.
               </p>
             </div>
           )}
@@ -196,7 +204,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
                     ? "border-white/30 text-white hover:bg-white hover:text-ink"
                     : "border-white/10 text-white/20 cursor-not-allowed"
                 }`}
-                aria-label="Page précédente"
+                aria-label="Page pr&eacute;c&eacute;dente"
               >
                 ←
               </button>

@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
 const PLAQUETTE_URL = "/plaquette-plus3-players.pdf";
+const PLAYERS_LOGO = "/players-logo.png";
 
 export default function PlayersBanner() {
+  const [logoError, setLogoError] = useState(false);
+
   return (
     <section className="relative overflow-hidden bg-[#0a0a0a] py-20 md:py-28">
       {/* Red accent glow */}
@@ -25,10 +30,25 @@ export default function PlayersBanner() {
         <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-center md:gap-16 md:text-left">
           {/* Content */}
           <div className="flex-1">
-            {/* Big +3 Players badge */}
-            <div className="mb-6 inline-flex items-center gap-3">
-              <span className="text-4xl font-bold text-red-500 md:text-5xl">+3</span>
-              <span className="text-3xl font-light tracking-wider text-white md:text-4xl">Players</span>
+            {/* Logo or fallback text */}
+            <div className="mb-6">
+              {!logoError ? (
+                <img
+                  src={PLAYERS_LOGO}
+                  alt="+3 Players"
+                  className="mx-auto h-16 w-auto object-contain md:mx-0 md:h-20"
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <div className="inline-flex items-center gap-3">
+                  <span className="text-4xl font-bold text-red-500 md:text-5xl">
+                    +3
+                  </span>
+                  <span className="text-3xl font-light tracking-wider text-white md:text-4xl">
+                    Players
+                  </span>
+                </div>
+              )}
             </div>
 
             <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
@@ -36,8 +56,9 @@ export default function PlayersBanner() {
               <span className="text-red-500">son image.</span>
             </h2>
             <p className="mt-4 max-w-xl text-base text-white/50 md:text-lg">
-              Personal branding, shooting photo, contenus r&eacute;seaux, identit&eacute; visuelle
-              &mdash; +3 Players construit l&rsquo;image des athl&egrave;tes qui veulent se
+              Personal branding, shooting photo, vid&eacute;o lifestyle et match,
+              contenus r&eacute;seaux, identit&eacute; visuelle &mdash; +3 Players
+              construit l&rsquo;image des athl&egrave;tes qui veulent se
               d&eacute;marquer en dehors du terrain.
             </p>
           </div>

@@ -12,6 +12,9 @@ function getEmbedUrl(url: string): string {
   if (match) return `https://www.youtube.com/embed/${match[1]}`;
   match = url.match(/vimeo\.com\/(\d+)/);
   if (match) return `https://player.vimeo.com/video/${match[1]}`;
+  // Instagram reels
+  match = url.match(/instagram\.com\/reel\/([\w-]+)/);
+  if (match) return `https://www.instagram.com/reel/${match[1]}/embed/`;
   return url;
 }
 

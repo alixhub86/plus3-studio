@@ -25,6 +25,7 @@ export type Project = {
   year?: string;
   description?: string;
   cover?: ProjectMedia;
+  logo?: string;
   gallery: ProjectMedia[];
   campaigns: Campaign[];
 };

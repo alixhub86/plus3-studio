@@ -3,29 +3,73 @@
 import { useState, type FormEvent } from "react";
 import { site } from "@/data/site";
 
+// ═══════════════════════════════════════════════════════════════════════════
+// Pour que le formulaire envoie les mails directement :
+// 1. Va sur https://web3forms.com/
+// 2. Entre l'email du studio : contact@plus3studio.fr
+// 3. Tu recevras un "access key" par mail — colle-le ci-dessous :
+// ═══════════════════════════════════════════════════════════════════════════
+const WEB3FORMS_KEY = "";
+
 export default function CTA() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const name = data.get("name") as string;
     const email = data.get("email") as string;
     const message = data.get("message") as string;
 
-    // Fallback: open mailto with pre-filled content.
-    // Replace this with a form service (Formspree, Netlify Forms, etc.)
-    // when you deploy.
-    const subject = encodeURIComponent(`Nouveau projet — ${name}`);
-    const body = encodeURIComponent(
-      `Nom : ${name}\nEmail : ${email}\n\n${message}`,
-    );
-    window.open(
-      `mailto:${site.email}?subject=${subject}&body=${body}`,
-      "_self",
-    );
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+    // Si pas de clé Web3Forms, fallback mailto
+    if (!WEB3FORMS_KEY) {
+      const subject = encodeURIComponent(`Nouveau projet — ${name}`);
+      const body = encodeURIComponent(
+        `Nom : ${name}\nEmail : ${email}\n\n${message}`,
+      );
+      window.open(
+        `mailto:${site.email}?subject=${subject}&body=${body}`,
+        "_self",
+      );
+      setSent(true);
+      setTimeout(() => setSent(false), 4000);
+      return;
+    }
+
+    setLoading(true);
+    setError(false);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Nouveau projet — ${name}`,
+          from_name: name,
+          name,
+          email,
+          message,
+        }),
+      });
+
+      if (response.ok) {
+        setSent(true);
+        form.reset();
+        setTimeout(() => setSent(false), 5000);
+      } else {
+        setError(true);
+        setTimeout(() => setError(false), 5000);
+      }
+    } catch {
+      setError(true);
+      setTimeout(() => setError(false), 5000);
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -44,7 +88,7 @@ export default function CTA() {
             Un projet sportif en t&ecirc;te ?
           </h2>
           <p className="reveal reveal-delay-2 mx-auto mt-4 max-w-xl text-mist-500">
-            On en discute autour d'un café — ou d'un terrain.
+            On en discute autour d'un caf&eacute; — ou d'un terrain.
           </p>
         </div>
 
@@ -100,7 +144,7 @@ export default function CTA() {
               name="message"
               required
               rows={5}
-              placeholder="Décrivez brièvement votre projet, vos besoins, votre timing..."
+              placeholder="D&eacute;crivez bri&egrave;vement votre projet, vos besoins, votre timing..."
               className="w-full resize-none rounded-xl border border-bone-200 bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-ink focus:ring-1 focus:ring-ink"
             />
           </div>
@@ -108,10 +152,17 @@ export default function CTA() {
           <div className="flex flex-wrap items-center gap-5 pt-2">
             <button
               type="submit"
-              className="group inline-flex items-center gap-3 rounded-full bg-lime px-7 py-4 text-sm font-semibold text-ink transition-all hover:bg-ink hover:text-lime"
+              disabled={loading}
+              className="group inline-flex items-center gap-3 rounded-full bg-lime px-7 py-4 text-sm font-semibold text-ink transition-all hover:bg-ink hover:text-lime disabled:opacity-50"
             >
-              {sent ? "Message ouvert ✓" : "Envoyer le message"}
-              {!sent && (
+              {sent
+                ? "Message envoy\u00e9 \u2713"
+                : error
+                  ? "Erreur, r\u00e9essayez"
+                  : loading
+                    ? "Envoi en cours\u2026"
+                    : "Envoyer le message"}
+              {!sent && !loading && !error && (
                 <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>

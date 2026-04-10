@@ -3,7 +3,8 @@
   "tags": ["Vidéo"],
   "client": "Club Ambassadeur",
   "year": "2026",
-  "decoColor": "gray"
+  "decoColor": "gray",
   "videos": [
-    { "url": "https://youtu.be/jw55adhZCKE" },
+    { "url": "https://youtu.be/jw55adhZCKE" }
+  ]
 }

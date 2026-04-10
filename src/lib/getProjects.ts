@@ -72,6 +72,14 @@ function prettyCampaignTitle(folder: string): string {
   return folder.replace(/^\d+[-_]/, "").replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+function getYouTubePoster(url: string): string | undefined {
+  const match = url.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]+)/,
+  );
+  if (match) return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+  return undefined;
+}
+
 type VideoLink = {
   url: string;
   poster?: string;
@@ -84,6 +92,7 @@ type Meta = {
   year?: string;
   description?: string;
   decoColor?: "lime" | "gray" | "black";
+  logo?: string;
   videos?: VideoLink[];
 };
 
@@ -122,7 +131,13 @@ export function getProjects(): Project[] {
 
     // 1) Scan sub-folders as campaigns
     const subDirs = entries
-      .filter((e) => e.isDirectory() && !e.name.startsWith(".") && !e.name.startsWith("_"))
+      .filter(
+        (e) =>
+          e.isDirectory() &&
+          !e.name.startsWith(".") &&
+          !e.name.startsWith("_") &&
+          e.name.toLowerCase() !== "logo",
+      )
       .map((e) => e.name)
       .sort();
 
@@ -163,14 +178,42 @@ export function getProjects(): Project[] {
       }
     }
 
-    // 3) Add video embed links from meta.json
-    if (meta.videos && meta.videos.length > 0) {
-      for (const v of meta.videos) {
-        gallery.push({ type: "embed", url: v.url, poster: v.poster });
+    // 3) Detect logo
+    let logo: string | undefined;
+    if (meta.logo) {
+      logo = meta.logo;
+    }
+    if (!logo) {
+      for (const f of rootFiles) {
+        const base = path.basename(f, path.extname(f)).toLowerCase();
+        if (base === "logo") {
+          logo = `${dirUrl}/${encodeURIComponent(f)}`;
+          break;
+        }
+      }
+    }
+    if (!logo) {
+      const logoDirPath = path.join(folderPath, "Logo");
+      if (fs.existsSync(logoDirPath) && fs.statSync(logoDirPath).isDirectory()) {
+        const logoFiles = fs
+          .readdirSync(logoDirPath)
+          .filter((f) => isMedia(f))
+          .sort();
+        if (logoFiles.length > 0) {
+          logo = `${dirUrl}/${encodeURIComponent("Logo")}/${encodeURIComponent(logoFiles[0])}`;
+        }
       }
     }
 
-    // 4) Auto-pick cover if none explicit
+    // 4) Add video embed links from meta.json (with auto-poster for YouTube)
+    if (meta.videos && meta.videos.length > 0) {
+      for (const v of meta.videos) {
+        const poster = v.poster || getYouTubePoster(v.url);
+        gallery.push({ type: "embed", url: v.url, poster });
+      }
+    }
+
+    // 5) Auto-pick cover if none explicit
     if (!cover && gallery.length > 0) {
       cover = gallery[0];
     }
@@ -188,6 +231,7 @@ export function getProjects(): Project[] {
       year: meta.year,
       description: meta.description,
       cover,
+      logo,
       gallery,
       campaigns,
     });

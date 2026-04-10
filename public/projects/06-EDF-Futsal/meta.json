@@ -1,7 +1,10 @@
 {
   "title": "EDF Futsal",
-  "tags": ["Photo"],
+  "tags": ["Photo", "Vidéo"],
   "client": "EDF",
   "year": "2025",
-  "decoColor": "gray"
+  "decoColor": "gray",
+  "videos": [
+    { "url": "https://youtu.be/rg1MQmKYBdQ" }
+  ]
 }

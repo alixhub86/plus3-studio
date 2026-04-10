@@ -3,5 +3,9 @@
   "tags": ["Photo", "Vidéo"],
   "client": "Arena Futuroscope",
   "year": "2025",
-  "decoColor": "gray"
+  "decoColor": "gray",
+  "videos": [
+    { "url": "https://youtu.be/uH7efO6AacM" },
+    { "url": "https://www.instagram.com/reel/DOIj7MODxFT/" }
+  ]
 }
