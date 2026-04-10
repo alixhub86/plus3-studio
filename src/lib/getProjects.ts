@@ -68,8 +68,8 @@ function prettyCampaignTitle(folder: string): string {
     const title = rest.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
     return `${title} — ${monthLabel} ${year}`;
   }
-  // Fallback: just clean up the folder name
-  return folder.replace(/^\d+[-_]/, "").replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  // Fallback: just clean up the folder name (keep original casing)
+  return folder.replace(/^\d+[-_]/, "").replace(/[-_]/g, " ");
 }
 
 function getYouTubePoster(url: string): string | undefined {

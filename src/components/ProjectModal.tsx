@@ -30,7 +30,7 @@ function MediaThumb({
       <button
         type="button"
         onClick={onClick}
-        className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-ink"
+        className="group relative aspect-video w-full overflow-hidden rounded-xl bg-ink col-span-2 md:col-span-3"
       >
         {media.poster ? (
           <Image
@@ -61,7 +61,7 @@ function MediaThumb({
       <button
         type="button"
         onClick={onClick}
-        className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-ink"
+        className="group relative aspect-video w-full overflow-hidden rounded-xl bg-ink col-span-2 md:col-span-3"
       >
         <video
           src={media.src}
