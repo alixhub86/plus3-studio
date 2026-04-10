@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/data/site";
 
 export default function Footer() {
@@ -36,12 +37,12 @@ export default function Footer() {
         </ul>
 
         {/* Legal */}
-        <a
-          href="#"
+        <Link
+          href="/mentions-legales"
           className="text-xs text-white/40 transition hover:text-white/70"
         >
-          Mentions légales
-        </a>
+          Mentions l&eacute;gales
+        </Link>
       </div>
     </footer>
   );
