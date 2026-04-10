@@ -43,7 +43,7 @@ export default function MentionsLegales() {
                 freelances
               </li>
               <li>
-                <strong>Responsable de la publication :</strong> Alix Hubert
+                <strong>Responsable de la publication :</strong> Alix HUBERT
               </li>
               <li>
                 <strong>Email :</strong>{" "}
@@ -186,8 +186,8 @@ export default function MentionsLegales() {
               Conception &amp; d&eacute;veloppement : +3 Studio
             </p>
             <p>
-              Photographies : &copy; +3 Studio &mdash; Alix Hubert, Christopher
-              Deniau, Alexis Parpaillon. Toute utilisation non autoris&eacute;e
+              Photographies : &copy; +3 Studio &mdash; Alix HUBERT, Christopher
+              DEBENHAM, Alexis PATIENT. Toute utilisation non autoris&eacute;e
               est interdite.
             </p>
           </section>
