@@ -173,6 +173,8 @@ export function getProjects(): Project[] {
       if (!media) continue;
       if (base === "cover") {
         cover = media;
+      } else if (base === "logo") {
+        // Skip — logo is only used on the card overlay, not in the gallery
       } else {
         gallery.push(media);
       }
