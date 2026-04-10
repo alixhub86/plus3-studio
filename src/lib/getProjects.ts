@@ -135,8 +135,7 @@ export function getProjects(): Project[] {
         (e) =>
           e.isDirectory() &&
           !e.name.startsWith(".") &&
-          !e.name.startsWith("_") &&
-          e.name.toLowerCase() !== "logo",
+          !e.name.startsWith("_"),
       )
       .map((e) => e.name)
       .sort();
