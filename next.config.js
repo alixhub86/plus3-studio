@@ -8,6 +8,7 @@ const nextConfig = {
   // Images déjà compressées, pas besoin de serveur d'optimisation
   images: {
     unoptimized: true,
+    qualities: [40, 55, 75],
   },
 };
 

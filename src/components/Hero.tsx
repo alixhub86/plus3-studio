@@ -64,9 +64,10 @@ export default function Hero() {
 
       {/* ── CONTENT ──────────────────────────────────────────────────── */}
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-6 pb-32 pt-44 md:px-10 md:pb-40 md:pt-52">
-        <h1 className="reveal max-w-5xl text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-[88px]">
-          {heroContent.title_start}{" "}
+        <h1 className="reveal max-w-5xl text-5xl font-bold leading-[1] tracking-tight md:text-7xl lg:text-[88px]">
           <span className="italic text-lime">{heroContent.title_accent}</span>
+          <br />
+          {heroContent.title_end}
         </h1>
 
         <p className="reveal reveal-delay-1 mt-8 max-w-2xl text-base text-white/80 md:text-lg">

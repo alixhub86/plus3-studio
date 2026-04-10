@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { site } from "@/data/site";
 import "@/styles/globals.css";
 
-const hanken = Hanken_Grotesk({
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-body",
   display: "swap",
 });
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={hanken.variable}>
+    <html lang="fr" className={poppins.variable}>
       <body className="bg-white text-ink antialiased">{children}</body>
     </html>
   );
