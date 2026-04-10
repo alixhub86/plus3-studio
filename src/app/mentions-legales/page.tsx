@@ -82,7 +82,7 @@ export default function MentionsLegales() {
               </li>
             </ul>
             <p className="mt-3">
-              Le nom de domaine <strong>plus3studio.fr</strong> est
+              Le nom de domaine <strong>plus3studio.fr</strong>{" "}est
               enregistr&eacute; aupr&egrave;s de IONOS (1&amp;1 Ionos SE).
             </p>
           </section>
