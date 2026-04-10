@@ -178,15 +178,21 @@ export function getProjects(): Project[] {
       }
     }
 
-    // 3) Detect logo
+    // 3) Detect logo (supports svg, png, jpg, webp…)
+    const LOGO_EXT = new Set([...IMAGE_EXT, ".svg"]);
     let logo: string | undefined;
     if (meta.logo) {
       logo = meta.logo;
     }
     if (!logo) {
-      for (const f of rootFiles) {
-        const base = path.basename(f, path.extname(f)).toLowerCase();
-        if (base === "logo") {
+      // Scan ALL root files (not just media) for logo.*
+      const allRootFiles = entries
+        .filter((e) => e.isFile())
+        .map((e) => e.name);
+      for (const f of allRootFiles) {
+        const ext = path.extname(f).toLowerCase();
+        const base = path.basename(f, ext).toLowerCase();
+        if (base === "logo" && LOGO_EXT.has(ext)) {
           logo = `${dirUrl}/${encodeURIComponent(f)}`;
           break;
         }
@@ -197,7 +203,10 @@ export function getProjects(): Project[] {
       if (fs.existsSync(logoDirPath) && fs.statSync(logoDirPath).isDirectory()) {
         const logoFiles = fs
           .readdirSync(logoDirPath)
-          .filter((f) => isMedia(f))
+          .filter((f) => {
+            const ext = path.extname(f).toLowerCase();
+            return LOGO_EXT.has(ext);
+          })
           .sort();
         if (logoFiles.length > 0) {
           logo = `${dirUrl}/${encodeURIComponent("Logo")}/${encodeURIComponent(logoFiles[0])}`;
