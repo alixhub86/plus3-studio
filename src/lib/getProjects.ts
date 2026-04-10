@@ -1,0 +1,197 @@
+import fs from "node:fs";
+import path from "node:path";
+import type {
+  Project,
+  ProjectMedia,
+  ProjectCategory,
+  Campaign,
+} from "@/data/projects";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUTO-DÉCOUVERTE DES PROJETS DEPUIS public/projects/
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// Structure supportée :
+//
+//   public/projects/01-mon-client/
+//     ├── meta.json          ← infos du projet (titre, tags, client...)
+//     ├── cover.jpg          ← cover de la carte (optionnel, sinon 1ère image)
+//     ├── photo1.jpg         ← médias "en vrac" → galerie principale
+//     ├── 2024-09-matchday/  ← sous-dossier = campagne (groupée par date)
+//     │   ├── 01.jpg
+//     │   └── 02.jpg
+//     └── 2025-01-rebrand/
+//         └── affiche.jpg
+//
+// Règles :
+//   • L'ordre des projets = ordre alphabétique des dossiers (préfixer 01-, 02-)
+//   • cover.* → image de couverture de la carte portfolio
+//   • Sous-dossiers → campagnes (triées par nom, donc par date si préfixées)
+//   • Fichiers à la racine (hors cover + meta) → galerie principale
+// ─────────────────────────────────────────────────────────────────────────────
+
+const PROJECTS_DIR = path.join(process.cwd(), "public", "projects");
+
+const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
+const VIDEO_EXT = new Set([".mp4", ".webm", ".mov"]);
+
+function isMedia(name: string): boolean {
+  const ext = path.extname(name).toLowerCase();
+  return IMAGE_EXT.has(ext) || VIDEO_EXT.has(ext);
+}
+
+function fileToMedia(name: string, dirUrl: string): ProjectMedia | null {
+  const ext = path.extname(name).toLowerCase();
+  const src = `${dirUrl}/${encodeURIComponent(name)}`;
+  if (IMAGE_EXT.has(ext)) return { type: "image", src };
+  if (VIDEO_EXT.has(ext)) return { type: "video", src };
+  return null;
+}
+
+function scanMediaFiles(dirPath: string, dirUrl: string): ProjectMedia[] {
+  if (!fs.existsSync(dirPath)) return [];
+  return fs
+    .readdirSync(dirPath)
+    .filter((f) => !f.startsWith(".") && !f.startsWith("_") && f !== "meta.json")
+    .sort()
+    .map((f) => fileToMedia(f, dirUrl))
+    .filter((m): m is ProjectMedia => m !== null);
+}
+
+function prettyCampaignTitle(folder: string): string {
+  // "2024-09-matchday" → "Matchday — Sept. 2024"
+  const match = folder.match(/^(\d{4})-(\d{2})-(.+)$/);
+  if (match) {
+    const [, year, month, rest] = match;
+    const months = ["Janv.", "Fév.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
+    const monthLabel = months[parseInt(month, 10) - 1] ?? month;
+    const title = rest.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    return `${title} — ${monthLabel} ${year}`;
+  }
+  // Fallback: just clean up the folder name
+  return folder.replace(/^\d+[-_]/, "").replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+type VideoLink = {
+  url: string;
+  poster?: string;
+};
+
+type Meta = {
+  title: string;
+  tags?: ProjectCategory[];
+  client?: string;
+  year?: string;
+  description?: string;
+  decoColor?: "lime" | "gray" | "black";
+  videos?: VideoLink[];
+};
+
+export function getProjects(): Project[] {
+  if (!fs.existsSync(PROJECTS_DIR)) return [];
+
+  const folders = fs
+    .readdirSync(PROJECTS_DIR, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .filter((name) => !name.startsWith("_") && !name.startsWith("."))
+    .sort();
+
+  const projects: Project[] = [];
+
+  for (const folder of folders) {
+    const folderPath = path.join(PROJECTS_DIR, folder);
+    const metaPath = path.join(folderPath, "meta.json");
+    if (!fs.existsSync(metaPath)) continue;
+
+    let meta: Meta;
+    try {
+      meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
+    } catch {
+      continue;
+    }
+
+    const slug = folder.replace(/^\d+[-_]/, "");
+    const dirUrl = `/projects/${encodeURIComponent(folder)}`;
+
+    // Scan root-level entries
+    const entries = fs.readdirSync(folderPath, { withFileTypes: true });
+    let cover: ProjectMedia | undefined;
+    const gallery: ProjectMedia[] = [];
+    const campaigns: Campaign[] = [];
+
+    // 1) Scan sub-folders as campaigns
+    const subDirs = entries
+      .filter((e) => e.isDirectory() && !e.name.startsWith(".") && !e.name.startsWith("_"))
+      .map((e) => e.name)
+      .sort();
+
+    for (const sub of subDirs) {
+      const subPath = path.join(folderPath, sub);
+      const subUrl = `${dirUrl}/${encodeURIComponent(sub)}`;
+      const media = scanMediaFiles(subPath, subUrl);
+      if (media.length > 0) {
+        campaigns.push({
+          id: sub,
+          title: prettyCampaignTitle(sub),
+          media,
+        });
+      }
+    }
+
+    // 2) Scan root-level files
+    const rootFiles = entries
+      .filter(
+        (e) =>
+          e.isFile() &&
+          !e.name.startsWith(".") &&
+          !e.name.startsWith("_") &&
+          e.name !== "meta.json" &&
+          isMedia(e.name),
+      )
+      .map((e) => e.name)
+      .sort();
+
+    for (const f of rootFiles) {
+      const base = path.basename(f, path.extname(f)).toLowerCase();
+      const media = fileToMedia(f, dirUrl);
+      if (!media) continue;
+      if (base === "cover") {
+        cover = media;
+      } else {
+        gallery.push(media);
+      }
+    }
+
+    // 3) Add video embed links from meta.json
+    if (meta.videos && meta.videos.length > 0) {
+      for (const v of meta.videos) {
+        gallery.push({ type: "embed", url: v.url, poster: v.poster });
+      }
+    }
+
+    // 4) Auto-pick cover if none explicit
+    if (!cover && gallery.length > 0) {
+      cover = gallery[0];
+    }
+    if (!cover && campaigns.length > 0 && campaigns[0].media.length > 0) {
+      const firstImg = campaigns[0].media.find((m) => m.type === "image");
+      cover = firstImg ?? campaigns[0].media[0];
+    }
+
+    projects.push({
+      id: slug,
+      title: meta.title,
+      tags: meta.tags ?? [],
+      decoColor: meta.decoColor ?? "lime",
+      client: meta.client,
+      year: meta.year,
+      description: meta.description,
+      cover,
+      gallery,
+      campaigns,
+    });
+  }
+
+  return projects;
+}

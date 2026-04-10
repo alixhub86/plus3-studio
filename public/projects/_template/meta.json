@@ -1,0 +1,14 @@
+{
+  "title": "Titre du projet",
+  "tags": ["Branding", "Photo"],
+  "client": "Nom du client",
+  "year": "2025",
+  "decoColor": "lime",
+  "description": "Description courte du projet (optionnel)",
+  "videos": [
+    {
+      "url": "https://www.youtube.com/watch?v=XXXXXXXXX",
+      "poster": ""
+    }
+  ]
+}

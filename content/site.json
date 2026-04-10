@@ -1,0 +1,14 @@
+{
+  "name": "+3 Studio",
+  "tagline": "Communication sportive 360°",
+  "email": "contact@plus3studio.fr",
+  "logo": {
+    "src": "/logo.svg",
+    "width": 110
+  },
+  "socials": [
+    { "label": "Instagram", "href": "https://instagram.com/plus3.studio" },
+    { "label": "Facebook", "href": "https://www.facebook.com/plustroisstudio/" },
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/company/plus3-studio/" }
+  ]
+}
