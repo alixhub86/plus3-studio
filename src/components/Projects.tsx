@@ -93,9 +93,9 @@ function ProjectCard({
             <Image
               src={project.logo}
               alt=""
-              width={48}
-              height={48}
-              className="h-10 w-10 flex-shrink-0 object-contain drop-shadow-lg md:h-12 md:w-12"
+              width={80}
+              height={80}
+              className="h-16 w-16 flex-shrink-0 object-contain drop-shadow-lg md:h-20 md:w-20"
             />
           )}
         </div>
