@@ -138,7 +138,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
             <span className="text-[10px] uppercase tracking-[0.25em] text-white/50">
               Portfolio
             </span>
-            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
               Nos projets
             </h2>
           </div>

@@ -57,7 +57,7 @@ function ExpandedProfile({ member }: { member: TeamMember }) {
       <div className="flex-1 space-y-6">
         {/* Name + role */}
         <div>
-          <h3 className="text-3xl font-extrabold tracking-tight">
+          <h3 className="text-3xl font-semibold tracking-tight">
             {member.firstName}
           </h3>
           <p className="mt-1 text-sm text-mist-500">{member.role}</p>
@@ -215,7 +215,7 @@ export default function Team() {
           <span className="text-[10px] uppercase tracking-[0.25em] text-mist-500">
             Le collectif
           </span>
-          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-ink md:text-6xl">
+          <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
             Qui sommes-nous
           </h2>
           <p className="mt-4 max-w-xl text-mist-500">
@@ -253,7 +253,7 @@ export default function Team() {
                   />
                 </div>
 
-                <h3 className="mt-5 text-xl font-extrabold text-ink md:text-2xl">
+                <h3 className="mt-5 text-xl font-semibold text-ink md:text-2xl">
                   {member.firstName}
                 </h3>
                 <p className="mt-1 text-sm text-mist-500">

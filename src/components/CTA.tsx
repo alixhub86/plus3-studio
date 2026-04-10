@@ -40,8 +40,8 @@ export default function CTA() {
           <span className="reveal text-[10px] uppercase tracking-[0.25em] text-mist-500">
             Contact
           </span>
-          <h2 className="reveal reveal-delay-1 mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight text-ink md:text-6xl">
-            Un projet sportif <span className="italic">en tête ?</span>
+          <h2 className="reveal reveal-delay-1 mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+            Un projet sportif en t&ecirc;te ?
           </h2>
           <p className="reveal reveal-delay-2 mx-auto mt-4 max-w-xl text-mist-500">
             On en discute autour d'un café — ou d'un terrain.

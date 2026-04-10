@@ -259,7 +259,7 @@ export default function ProjectModal({
                 <span className="text-xs text-mist-400">{project.year}</span>
               )}
             </div>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
               {project.title}
             </h2>
             {project.client && (

@@ -1,8 +1,10 @@
 "use client";
 
+const PLAQUETTE_URL = "/plaquette-plus3-players.pdf";
+
 export default function PlayersBanner() {
   return (
-    <section className="relative overflow-hidden bg-ink py-20 md:py-28">
+    <section className="relative overflow-hidden bg-[#0a0a0a] py-20 md:py-28">
       {/* Red accent glow */}
       <div
         aria-hidden
@@ -13,28 +15,37 @@ export default function PlayersBanner() {
         className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-red-600/10 blur-[100px]"
       />
 
+      {/* Red top border accent */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent"
+      />
+
       <div className="relative mx-auto max-w-7xl px-6 md:px-10">
-        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-16 md:text-left">
+        <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-center md:gap-16 md:text-left">
           {/* Content */}
           <div className="flex-1">
-            <span className="inline-block rounded-full border border-red-500/30 bg-red-600/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-red-400">
-              +3 Players
-            </span>
-            <h2 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              Votre image,{" "}
-              <span className="italic text-red-500">votre avantage.</span>
+            {/* Big +3 Players badge */}
+            <div className="mb-6 inline-flex items-center gap-3">
+              <span className="text-4xl font-bold text-red-500 md:text-5xl">+3</span>
+              <span className="text-3xl font-light tracking-wider text-white md:text-4xl">Players</span>
+            </div>
+
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+              Chaque joueur m&eacute;rite{" "}
+              <span className="text-red-500">son image.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-base text-white/60 md:text-lg">
-              +3 Players accompagne les athletes dans la construction de leur
-              marque personnelle. Personal branding, shooting photo, contenus
-              r&eacute;seaux &mdash; on vous place sous les projecteurs.
+            <p className="mt-4 max-w-xl text-base text-white/50 md:text-lg">
+              Personal branding, shooting photo, contenus r&eacute;seaux, identit&eacute; visuelle
+              &mdash; +3 Players construit l&rsquo;image des athl&egrave;tes qui veulent se
+              d&eacute;marquer en dehors du terrain.
             </p>
           </div>
 
           {/* CTA */}
           <div className="flex flex-col items-center gap-4">
             <a
-              href="/plaquette-plus3-players.pdf"
+              href={PLAQUETTE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 rounded-full bg-red-600 px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-red-500 hover:shadow-lg hover:shadow-red-600/25"
@@ -49,16 +60,16 @@ export default function PlayersBanner() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                 />
               </svg>
-              D&eacute;couvrir +3 Players
+              Voir la plaquette
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                 &rarr;
               </span>
             </a>
-            <span className="text-xs text-white/30">
-              T&eacute;l&eacute;charger la plaquette PDF
+            <span className="text-xs text-white/25">
+              Ouvre le PDF dans le navigateur
             </span>
           </div>
         </div>

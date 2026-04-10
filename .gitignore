@@ -42,6 +42,10 @@ yarn-error.log*
 # claude config (contient des tokens)
 .claude/
 
+# PDF trop lourd pour GitHub — hébergé séparément
+/public/plaquette-plus3-players.pdf
+/public/plaquette-compressed.pdf
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
