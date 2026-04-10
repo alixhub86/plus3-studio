@@ -62,7 +62,7 @@ export default function Navbar({ logoSrc }: NavbarProps) {
               className={`transition duration-500 ${
                 isDark ? "invert" : ""
               }`}
-              style={{ width: "auto", height: 40 }}
+              style={{ width: "auto", height: 60 }}
             />
           ) : (
             <span
