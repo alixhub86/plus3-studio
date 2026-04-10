@@ -35,7 +35,7 @@ export default function MentionsLegales() {
           <section>
             <h2>1. &Eacute;diteur du site</h2>
             <p>
-              Le site <strong>plus3studio.fr</strong> est &eacute;dit&eacute; par :
+              Le site <strong>plus3studio.fr</strong> est &eacute;dit&eacute; par&nbsp;:
             </p>
             <ul className="ml-6 list-disc space-y-1">
               <li>
