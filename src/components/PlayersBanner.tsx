@@ -41,7 +41,7 @@ export default function PlayersBanner() {
                 />
               ) : (
                 <div className="inline-flex items-center gap-3">
-                  <span className="text-4xl font-bold text-red-500 md:text-5xl">
+                  <span className="text-4xl font-bold text-red-600 md:text-5xl">
                     +3
                   </span>
                   <span className="text-3xl font-light tracking-wider text-white md:text-4xl">
@@ -53,7 +53,7 @@ export default function PlayersBanner() {
 
             <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
               Chaque joueur m&eacute;rite{" "}
-              <span className="text-red-500">son image.</span>
+              <span className="text-red-600">son image.</span>
             </h2>
             <p className="mt-4 max-w-xl text-base text-white/50 md:text-lg">
               Personal branding, shooting photo, vid&eacute;o lifestyle et match,
