@@ -25,53 +25,40 @@ function MediaThumb({
   media: ProjectMedia;
   onClick: () => void;
 }) {
-  if (media.type === "embed") {
+  if (media.type === "embed" || media.type === "video") {
     return (
       <button
         type="button"
         onClick={onClick}
-        className="group relative aspect-video w-full overflow-hidden rounded-xl bg-ink col-span-2 md:col-span-3"
+        className="group relative aspect-video w-full overflow-hidden rounded-xl bg-ink"
       >
-        {media.poster ? (
-          <Image
-            src={media.poster}
-            alt=""
-            fill
-            sizes="(min-width: 768px) 33vw, 50vw"
-            className="object-cover"
-          />
+        {media.type === "embed" ? (
+          media.poster ? (
+            <Image
+              src={media.poster}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <iframe
+              src={getEmbedUrl(media.url)}
+              className="pointer-events-none h-full w-full"
+              tabIndex={-1}
+            />
+          )
         ) : (
-          <iframe
-            src={getEmbedUrl(media.url)}
-            className="pointer-events-none h-full w-full"
-            tabIndex={-1}
+          <video
+            src={media.src}
+            muted
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover"
           />
         )}
         <div className="absolute inset-0 flex items-center justify-center bg-ink/30 transition group-hover:bg-ink/50">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-xl text-ink">
-            &#9654;
-          </span>
-        </div>
-      </button>
-    );
-  }
-
-  if (media.type === "video") {
-    return (
-      <button
-        type="button"
-        onClick={onClick}
-        className="group relative aspect-video w-full overflow-hidden rounded-xl bg-ink col-span-2 md:col-span-3"
-      >
-        <video
-          src={media.src}
-          muted
-          playsInline
-          preload="metadata"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center bg-ink/20 transition group-hover:bg-ink/40">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-xl text-ink">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-lg text-ink md:h-14 md:w-14 md:text-xl">
             &#9654;
           </span>
         </div>
@@ -95,6 +82,43 @@ function MediaThumb({
         className="object-cover transition-transform duration-500 group-hover:scale-105"
       />
     </button>
+  );
+}
+
+/** Renders a media list: images in 3-col grid, videos/embeds in 2-col grid */
+function MediaGrid({
+  media,
+  onOpenLightbox,
+}: {
+  media: ProjectMedia[];
+  onOpenLightbox: (media: ProjectMedia[], idx: number) => void;
+}) {
+  const images = media
+    .map((m, i) => ({ m, i }))
+    .filter(({ m }) => m.type === "image");
+  const videos = media
+    .map((m, i) => ({ m, i }))
+    .filter(({ m }) => m.type === "video" || m.type === "embed");
+
+  return (
+    <div className="space-y-3 md:space-y-4">
+      {/* Videos: 2 per row */}
+      {videos.length > 0 && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
+          {videos.map(({ m, i }) => (
+            <MediaThumb key={i} media={m} onClick={() => onOpenLightbox(media, i)} />
+          ))}
+        </div>
+      )}
+      {/* Images: 2-col mobile, 3-col desktop */}
+      {images.length > 0 && (
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+          {images.map(({ m, i }) => (
+            <MediaThumb key={i} media={m} onClick={() => onOpenLightbox(media, i)} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -163,15 +187,7 @@ function CampaignFolder({
           isOpen ? "mt-3 max-h-[3000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-          {campaign.media.map((media, mi) => (
-            <MediaThumb
-              key={mi}
-              media={media}
-              onClick={() => onOpenLightbox(campaign.media, mi)}
-            />
-          ))}
-        </div>
+        <MediaGrid media={campaign.media} onOpenLightbox={onOpenLightbox} />
       </div>
     </div>
   );
@@ -301,15 +317,7 @@ export default function ProjectModal({
                   Autres cr&eacute;ations
                 </p>
               )}
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-                {project.gallery.map((media, i) => (
-                  <MediaThumb
-                    key={i}
-                    media={media}
-                    onClick={() => openLightbox(project.gallery, i)}
-                  />
-                ))}
-              </div>
+              <MediaGrid media={project.gallery} onOpenLightbox={openLightbox} />
             </div>
           )}
 

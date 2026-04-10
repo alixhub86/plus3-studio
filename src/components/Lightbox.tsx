@@ -98,14 +98,14 @@ export default function Lightbox({
       )}
 
       {/* Content */}
-      <div className="relative mx-auto flex max-h-[90vh] max-w-6xl items-center justify-center px-12 md:px-16">
+      <div className="relative mx-auto flex w-full max-w-7xl items-center justify-center px-14 md:px-20">
         {media.type === "image" && (
           <Image
             src={media.src}
             alt={media.alt ?? ""}
             width={1920}
             height={1080}
-            className={`max-h-[85vh] w-auto rounded-lg object-contain transition-opacity duration-500 ${
+            className={`max-h-[90vh] w-auto rounded-lg object-contain transition-opacity duration-500 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setLoaded(true)}
@@ -119,12 +119,12 @@ export default function Lightbox({
             controls
             autoPlay
             playsInline
-            className="max-h-[85vh] w-auto rounded-lg"
+            className="aspect-video w-full max-w-6xl rounded-lg"
           />
         )}
 
         {media.type === "embed" && (
-          <div className="aspect-video w-full max-w-4xl">
+          <div className="aspect-video w-full max-w-6xl">
             <iframe
               src={getEmbedUrl(media.url)}
               allow="autoplay; fullscreen; picture-in-picture"
