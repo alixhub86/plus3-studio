@@ -59,10 +59,10 @@ export default function Navbar({ logoSrc }: NavbarProps) {
               width={site.logo.width}
               height={Math.round(site.logo.width * 0.4)}
               priority
-              className={`transition duration-500 ${
+              className={`transition duration-500 h-[34px] md:h-[48px] w-auto ${
                 isDark ? "invert" : ""
               }`}
-              style={{ width: "auto", height: 48 }}
+              style={{ width: "auto" }}
             />
           ) : (
             <span
